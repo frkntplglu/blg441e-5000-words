@@ -20,7 +20,7 @@ func NewWordHandler(wordService services.WordService) *WordHandler {
 	}
 }
 
-func (h *WordHandler) handleGetAllBlogs(ctx *fiber.Ctx) error {
+func (h *WordHandler) handleGetAllWords(ctx *fiber.Ctx) error {
 	pagination := utils.GeneratePaginationFromCtx(ctx)
 
 	words, err := h.wordService.GetAllWords(models.Word{}, &pagination)
@@ -212,7 +212,7 @@ func (h *WordHandler) handleDeleteWordById(ctx *fiber.Ctx) error {
 
 func (h *WordHandler) SetRoutes(a *fiber.App) {
 	wordGroup := a.Group("/words")
-	wordGroup.Get("/", h.handleGetAllBlogs)
+	wordGroup.Get("/", h.handleGetAllWords)
 
 	wordGroup.Get("/:id<int>", h.handleGetWordById)
 	wordGroup.Post("/", h.handleCreateWord)
