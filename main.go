@@ -72,6 +72,6 @@ func main() {
 	questionHandler.SetRoutes(app)
 
 	// App Starting
-	app.Listen(":9000")
+	app.Listen("0.0.0.0:9000")
 
 }
