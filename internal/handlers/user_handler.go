@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
-	"github.com/frkntplglu/emir-backend/internal/config"
 	"github.com/frkntplglu/emir-backend/internal/middleware"
 	"github.com/frkntplglu/emir-backend/internal/models"
 	"github.com/frkntplglu/emir-backend/internal/services"
@@ -292,7 +291,7 @@ func (h *UserHandler) handleLogin(ctx *fiber.Ctx) error {
 	claims["user_id"] = user.Id
 	claims["exp"] = time.Now().Add(time.Minute * 15).Unix()
 
-	t, err := token.SignedString([]byte(config.ACCESS_TOKEN))
+	t, err := token.SignedString([]byte("MYACCESSKEY"))
 
 	if err != nil {
 		return err
@@ -308,7 +307,7 @@ func (h *UserHandler) handleLogin(ctx *fiber.Ctx) error {
 	rtClaims := refreshToken.Claims.(jwt.MapClaims)
 	rtClaims["sub"] = user.Id
 	rtClaims["exp"] = time.Now().Add(time.Hour * 24).Unix()
-	rt, err := refreshToken.SignedString([]byte(config.REFRESH_TOKEN))
+	rt, err := refreshToken.SignedString([]byte("MYREFRESHKEY"))
 	if err != nil {
 		return err
 	}
@@ -343,7 +342,7 @@ func (h *UserHandler) handleRefreshToken(ctx *fiber.Ctx) error {
 	refreshToken := ctx.Cookies("refreshToken")
 
 	token, err := jwt.Parse(refreshToken, func(token *jwt.Token) (interface{}, error) {
-		return []byte(config.REFRESH_TOKEN), nil
+		return []byte("MYREFRESHKEY"), nil
 	})
 
 	if err != nil {
@@ -401,7 +400,7 @@ func (h *UserHandler) handleRefreshToken(ctx *fiber.Ctx) error {
 	accessClaims["last_login"] = user.LastLogin
 	accessClaims["exp"] = time.Now().Add(time.Minute * 15).Unix()
 
-	newAccessToken, err := accessToken.SignedString([]byte(config.ACCESS_TOKEN))
+	newAccessToken, err := accessToken.SignedString([]byte("MYACCESSKEY"))
 
 	if err != nil {
 		return err
