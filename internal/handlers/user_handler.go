@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"regexp"
 	"strconv"
 	"time"
 
@@ -87,7 +86,7 @@ func (h *UserHandler) handleRegister(ctx *fiber.Ctx) error {
 		})
 	}
 
-	passwordCases := []string{".{8,}", "[a-z]", "[A-Z]", "[0-9]"}
+	/* passwordCases := []string{".{8,}", "[a-z]", "[A-Z]", "[0-9]"}
 	isPasswordPassed := true
 	for _, passwordCase := range passwordCases {
 		matched, _ := regexp.MatchString(passwordCase, reqBody.Password)
@@ -96,9 +95,9 @@ func (h *UserHandler) handleRegister(ctx *fiber.Ctx) error {
 			isPasswordPassed = false
 			break
 		}
-	}
+	} */
 
-	if !isPasswordPassed {
+	/* if !isPasswordPassed {
 		return ctx.Status(fiber.StatusInternalServerError).JSON(models.FailureResponse{
 			Success: false,
 			Error: models.ErrorDetails{
@@ -106,7 +105,7 @@ func (h *UserHandler) handleRegister(ctx *fiber.Ctx) error {
 				Reason:  "",
 			},
 		})
-	}
+	} */
 
 	user := models.User{
 		Firstname: reqBody.Firstname,

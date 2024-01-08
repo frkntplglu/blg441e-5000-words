@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 
+	"github.com/frkntplglu/emir-backend/internal/config"
 	"github.com/frkntplglu/emir-backend/internal/handlers"
 	"github.com/frkntplglu/emir-backend/internal/repositories"
 	"github.com/frkntplglu/emir-backend/internal/services"
@@ -16,7 +17,7 @@ import (
 
 func main() {
 
-	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d", "database-1.cpngaskb6zpb.us-east-1.rds.amazonaws.com", "postgres", "milo2023", "postgres", 5432)
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d", config.DB_HOST, config.DB_USER, config.DB_PASSWORD, config.DB_NAME, config.DB_PORT)
 	db, err := gorm.Open(postgres.New(postgres.Config{
 		DSN: dsn,
 	}), &gorm.Config{})
@@ -72,6 +73,6 @@ func main() {
 	questionHandler.SetRoutes(app)
 
 	// App Starting
-	app.Listen("0.0.0.0:9000")
+	app.Listen(":9000")
 
 }
